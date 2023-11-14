@@ -147,7 +147,7 @@ class GretelACTGAN:
         return self.model
 
     def generate_synthetic_data(self, num_records:int, max_invalid:int, verbose:bool = True, download:bool = False, \
-                                output_path:str = "GretelTest\\data\\"):
+                                output_path:str = "gretel\\data\\"):
         """
         Generates synthetic data using the model object
         NOTE: This implementation only submits the model for cloud training, not local training. 
@@ -175,10 +175,15 @@ class GretelACTGAN:
 
         if download:
             path = output_path + self.project_name + "_" + str(self.generation_number) + \
-                "-" + f"{num_records:03d}" + "-" + f"{max_invalid:03d}"+ "_synthetic_data.csv"
-            synthetic_df.to_csv(path, index=False)
+                "-" + f"{int(num_records):03d}" + "-" + f"{int(max_invalid):03d}"+ "_synthetic_data.csv"
+            
             if not verbose:
-                print("Synthetic data downloaded to " + path)
+                print("Downloading synthetic data to " + path)
+
+            synthetic_df.to_csv(path, index=False)
+
+            if not verbose:
+                print("Done!")
         return synthetic_df
     
     # TODO: This function is broken. Tried downloading "report" & produced following error:
