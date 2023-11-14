@@ -4,7 +4,6 @@ sys.path.insert(0,sys.path[0] + "\\..\\src")
 from gretel_ai.gretel_actgan import *
 import time
 import pandas as pd
-# import IPython
 from smart_open import open
 
 """
@@ -52,11 +51,8 @@ num_records = input("How many records do you want to generate? (integer): ")
 
 if generate_data == "y":
     # Generate synthetic data
-    start_time = time.time()
-    new_synthetic_df = actgan_project.generate_synthetic_data(num_records, 200, silent = False, download = True)
-    end_time = time.time()
-
-    print("Total time to generate synthetic data: " + str(end_time - start_time) + " seconds")
+    print("Sending query...")
+    new_synthetic_df = actgan_project.generate_synthetic_data(num_records, 200, verbose = False, download = True)
 
 
 
