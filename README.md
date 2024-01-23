@@ -34,10 +34,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
-<h3 align="center">Synthetic Data Generation Research</h3>
+<h3 align="center">Software Engineering Analytics Laboratory Research</h3>
 
   <p align="center">
-    Synthetic data generation research content for UCLA's Software Engineering Analytics Laboratory. 
+    Ricky Fok's research material in the SEAL lab at UCLA, led by Dr. Miryung Kim. 
     <br />
     <!-- <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
