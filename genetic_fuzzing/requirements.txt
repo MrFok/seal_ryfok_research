@@ -1,0 +1,4 @@
+antlr4-python3-runtime==4.13.0
+cfn-lint
+deap==1.4.1
+pyyaml
