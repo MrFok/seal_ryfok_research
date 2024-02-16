@@ -1,0 +1,8 @@
+templates:
+  - '**/*.yaml'
+ignore_checks:
+  - W2501
+  - W3045
+  - W3005
+  - W2001
+  
