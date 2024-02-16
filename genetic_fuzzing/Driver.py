@@ -2,9 +2,12 @@ import sys
 from antlr4 import *
 from JSON5Lexer import JSON5Lexer
 from JSON5Parser import JSON5Parser
+from CFDataValid import CFDataValid
 
 import io
 import sys
+
+import subprocess
 
 def main(argv):
     passFailStr = "PASS" if isValidCF(argv[1], verbose=False) else "FAIL"
@@ -38,8 +41,18 @@ def isValidCF(filePath, verbose=False):
     return True if statements == "" else False
 
 if __name__ == '__main__':
-    main(sys.argv)
+    # main(sys.argv)
+    # try:
+    #     output = subprocess.check_output(['cfn-lint', '--ignore-bad-template', '--non-zero-exit-code', 'informational',  sys.argv[1]])
+    #     # print(output.decode())
+    # except subprocess.CalledProcessError as e:
+    #     # print(f'cfn-lint output: "{e.output.decode()}"')
+    #     errors = e.output.decode().splitlines()
+    #     for i, error in enumerate(errors):
+    #         print(f"{i} - {error}")  
 
+    validator = CFDataValid()
+    ds1, ds2, pass1, pass2 = validator.validate_parser(verbose=True)
 
 
 
