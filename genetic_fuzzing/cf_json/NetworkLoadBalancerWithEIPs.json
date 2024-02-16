@@ -37,7 +37,6 @@
       }
     },
         "loadBalancer": {
-          "DependsOn":["EIP2","EIP1"],
             "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
             "Properties": {
                 "SubnetMappings": [

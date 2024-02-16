@@ -191,8 +191,7 @@
           "MultiAZ" : "false",
           "PubliclyAccessible" : "true",
           "Tags" : [ { "Key" : "Application", "Value" : { "Ref" : "AWS::StackId"} } ]
-        },
-        "DependsOn" : [ "AuroraCluster" ]
+        }
       },
   
       "S3Bucket" : {
@@ -281,8 +280,7 @@
               ]
             }
           } ]
-        },
-        "DependsOn" : [ "S3Bucket" ]
+        }
       },
   
       "DMSReplicationSubnetGroup" : {
@@ -312,8 +310,7 @@
           "ReplicationInstanceIdentifier" : "aurora-s3-repinstance-sampledb",
           "ReplicationSubnetGroupIdentifier" : { "Ref" : "DMSReplicationSubnetGroup" },
           "VpcSecurityGroupIds" : [ { "Ref" : "DMSSecurityGroup" } ]
-        },
-        "DependsOn" : [ "DMSReplicationSubnetGroup", "DMSSecurityGroup" ]
+        }
       },
   
       "AuroraSourceEndpoint" : {
@@ -326,7 +323,7 @@
           "ServerName" : { "Fn::GetAtt" : [ "AuroraCluster", "Endpoint.Address" ] },
           "Username" : "admin"
         },
-        "DependsOn" : [ "DMSReplicationInstance", "AuroraCluster", "AuroraDB" ]
+        "DependsOn" : [ "DMSReplicationInstance", "AuroraDB" ]
       },
   
       "S3TargetEndpoint" : {
@@ -340,7 +337,7 @@
             "ServiceAccessRoleArn" : { "Fn::GetAtt" : [ "S3TargetDMSRole", "Arn" ] }
           }
         },
-        "DependsOn" : [ "DMSReplicationInstance", "S3Bucket", "S3TargetDMSRole" ]
+        "DependsOn" : [ "DMSReplicationInstance"]
       },
   
       "DMSReplicationTask" : {
@@ -352,8 +349,7 @@
           "SourceEndpointArn" : { "Ref" : "AuroraSourceEndpoint" },
           "TableMappings" : "{ \"rules\": [ { \"rule-type\" : \"selection\", \"rule-id\" : \"1\", \"rule-name\" : \"1\", \"object-locator\" : { \"schema-name\" : \"dms_sample\", \"table-name\" : \"%\" }, \"rule-action\" : \"include\" } ] }",
           "TargetEndpointArn" : { "Ref" : "S3TargetEndpoint" }
-        },
-        "DependsOn" : [ "AuroraSourceEndpoint", "S3TargetEndpoint", "DMSReplicationInstance" ]
+        }
       }
   
   },
