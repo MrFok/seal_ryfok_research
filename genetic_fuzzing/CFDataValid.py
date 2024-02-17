@@ -32,6 +32,7 @@ NON_CF_FILES = {"BackgroundMediaPlayback.json",
 
 CF_FILES_DIR = "cf_json\\"
 NON_CF_FILES_DIR = "non_cf_json\\"
+GRAMMAR_BUILD_PATH = "build.sh"
 
 """
 Create a CFDataValid class to validate current JSON5 implementation
@@ -158,3 +159,13 @@ class CFDataValid():
                 print(f'{file[:12]}... | {"PASS - Unable to Parse" if not self.non_cf_states[file] else "FAIL - Parsed Successfully"}')
         
         return self.cf_states, self.non_cf_states, cf_pass, non_cf_pass
+
+    def recompile_grammar(self):
+        """
+        Recompiles the JSON5.g4 grammar file.
+
+        Returns:
+            None
+        """
+        subprocess.run(GRAMMAR_BUILD_PATH, shell=True)
+        return
