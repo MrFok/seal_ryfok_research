@@ -3,6 +3,7 @@ from antlr4 import *
 from JSON5Lexer import JSON5Lexer
 from JSON5Parser import JSON5Parser
 from CFDataValid import CFDataValid
+from g4Refine import g4Refine
 
 import io
 import sys
@@ -51,8 +52,15 @@ if __name__ == '__main__':
     #     for i, error in enumerate(errors):
     #         print(f"{i} - {error}")  
 
-    validator = CFDataValid()
-    ds1, ds2, pass1, pass2 = validator.validate_parser(verbose=True)
+    # validator = CFDataValid()
+    # validator.validate_file(sys.argv[1], verbose=False)
+    # print("Get Leaf")
+    # leafs = validator.get_leaf_nodes()
+    # for i, leaf in enumerate(leafs):
+    #     print(f"{i + 1}: {leaf}")
+    # ds1, ds2, pass1, pass2 = validator.validate_parser(verbose=True)
+
+    refiner = g4Refine(sys.argv[1])
 
 
 
