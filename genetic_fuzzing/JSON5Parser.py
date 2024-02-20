@@ -114,6 +114,12 @@ class JSON5Parser ( Parser ):
             if hasattr( listener, "exitJson5" ):
                 listener.exitJson5(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitJson5" ):
+                return visitor.visitJson5(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -167,6 +173,12 @@ class JSON5Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitObj" ):
                 listener.exitObj(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObj" ):
+                return visitor.visitObj(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -255,6 +267,12 @@ class JSON5Parser ( Parser ):
             if hasattr( listener, "exitPair" ):
                 listener.exitPair(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPair" ):
+                return visitor.visitPair(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -308,6 +326,12 @@ class JSON5Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitKey" ):
                 listener.exitKey(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitKey" ):
+                return visitor.visitKey(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -370,6 +394,12 @@ class JSON5Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitValue" ):
                 listener.exitValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitValue" ):
+                return visitor.visitValue(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -443,6 +473,12 @@ class JSON5Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArr" ):
                 listener.exitArr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArr" ):
+                return visitor.visitArr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -531,6 +567,12 @@ class JSON5Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitNumber" ):
                 listener.exitNumber(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNumber" ):
+                return visitor.visitNumber(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 

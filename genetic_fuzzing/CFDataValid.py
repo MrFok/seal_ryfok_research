@@ -3,6 +3,7 @@ import sys
 from antlr4 import *
 from JSON5Lexer import JSON5Lexer
 from JSON5Parser import JSON5Parser
+from JSON5Visitor import JSON5Visitor
 
 import subprocess
 
@@ -30,6 +31,8 @@ NON_CF_FILES = {"BackgroundMediaPlayback.json",
                 "SolarEnergeticParticle.json"
                 }
 
+INVALID_ROOTS = {":", "}", "{", ","}
+
 CF_FILES_DIR = "cf_json\\"
 NON_CF_FILES_DIR = "non_cf_json\\"
 GRAMMAR_BUILD_PATH = "build.sh"
@@ -43,6 +46,7 @@ class CFDataValid():
         self.non_cf_files = NON_CF_FILES
         self.cf_states = {}
         self.non_cf_states = {}
+        self.curr_tree = None
 
     def validate_file(self, filePath, verbose=False):
         """
@@ -71,12 +75,16 @@ class CFDataValid():
         sys.stdout = strout_buffer
 
         tree = parser.json5()
+        self.curr_tree = tree
 
         # Restore stdout & stderr
         sys.stdout = old_stdout
         sys.stderr = old_stderr
         statements = strerr_buffer.getvalue() + strout_buffer.getvalue()
-
+        # print(f"Tokens: {tree.toStringTree(recog=parser)}")
+        # print(tree.getChildCount())
+        # visitTree = JSON5Visitor().visit(tree)
+        # print(visitTree)
         # Check if file was parsed successfully via JSON5.g4 grammar
         if statements != "":
             if verbose:
@@ -169,3 +177,39 @@ class CFDataValid():
         """
         subprocess.run(GRAMMAR_BUILD_PATH, shell=True)
         return
+    
+    def get_leaf_nodes(self, currNode = None, leaves = []):
+        #TODO: For now, function is outputting all leaf nodes. Need to filter and place
+        #      valid pairs (e.g {"Description" : "string"})
+        # Could also hard code all leaf values for testing
+        """
+        Returns the leaf nodes of a given parse tree.
+
+        Args:
+            tree (ParseTree): The parse tree to extract leaf nodes from.
+
+        Returns:
+            list: A list of leaf nodes.
+        """
+
+        if self.curr_tree is None:
+            raise Exception("No parse tree found. Please parse a file first.")
+        
+        currNode = self.curr_tree if currNode is None else currNode
+        # print(currNode.getText())
+        if currNode.getChildCount() == 0:
+            text = currNode.getText()
+            if text not in INVALID_ROOTS:
+                leaves.append(currNode.getText())
+            return leaves
+        
+        for i in range(currNode.getChildCount()):
+            self.get_leaf_nodes(currNode.getChild(i), leaves)
+
+        return leaves
+
+    def dummy_get_leaf_nodes(self):
+        return {"Description" : "Best Practice SNS Topic", "Type":"String"}
+        
+
+        
