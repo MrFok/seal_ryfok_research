@@ -60,7 +60,15 @@ if __name__ == '__main__':
     #     print(f"{i + 1}: {leaf}")
     # ds1, ds2, pass1, pass2 = validator.validate_parser(verbose=True)
 
-    refiner = g4Refine(sys.argv[1])
+    refiner = g4Refine()
+    # refiner.refine(verbose=True)
+    # refiner.specialize(sys.argv[1], verbose=True)
+
+    # Specialize Demo
+    refiner.specialize_demo()
+
+    # Refine Demo
+    refiner.refine_demo()
 
 
 
