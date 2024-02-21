@@ -31,7 +31,8 @@ NON_CF_FILES = {"BackgroundMediaPlayback.json",
                 "SolarEnergeticParticle.json"
                 }
 
-INVALID_ROOTS = {":", "}", "{", ","}
+INVALID_ROOTS = {}
+#":", "}", "{", ","
 
 CF_FILES_DIR = "cf_json\\"
 NON_CF_FILES_DIR = "non_cf_json\\"
@@ -208,8 +209,7 @@ class CFDataValid():
 
         return leaves
 
-    def dummy_get_leaf_nodes(self):
-        return {"Description" : "Best Practice SNS Topic", "Type":"String"}
-        
-
-        
+    def get_leaf_nodes_mock(self):
+        return {"Description" : "Best Practice SNS Topic", "Type":"String",
+                "SNSTopic" : "arn:aws:sns:us-east-1:123456789012:MyTopic", "Domain" : "vpc",
+                "Ref" : "Subnet2" }
