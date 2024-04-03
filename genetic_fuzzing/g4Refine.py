@@ -162,7 +162,7 @@ class g4Refine():
         change_list = self.change_list[sampleFile]
         
         for i in range(len(leafs)):
-            input(f"Specialize with a random leaf {i}: Press any key to continue...")
+            input(f"Specialize with a random leaf {i}: Press ENTER key to continue...")
             random_leaf_change = random.choice([key for key in leafs.keys() if key not in change_list])
             change_list.append(random_leaf_change)
             print(f"\nSelected Leaf: \'{random_leaf_change}\' : \'{leafs[random_leaf_change]}\'\n")      
@@ -182,7 +182,7 @@ class g4Refine():
         Runs an iterative change on the target grammar file
 
         Args:
-            samepleFile (str): The file to extract a mutation from
+            sampleFile (str): The file to extract a mutation from
             verbose (bool): If True, prints the new rule and pair
         Return:
             new_g4 (str): The updated grammar file

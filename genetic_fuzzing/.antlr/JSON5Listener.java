@@ -76,4 +76,14 @@ public interface JSON5Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumber(JSON5Parser.NumberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JSON5Parser#snstopicPair}.
+	 * @param ctx the parse tree
+	 */
+	void enterSnstopicPair(JSON5Parser.SnstopicPairContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JSON5Parser#snstopicPair}.
+	 * @param ctx the parse tree
+	 */
+	void exitSnstopicPair(JSON5Parser.SnstopicPairContext ctx);
 }

@@ -95,6 +95,18 @@ public class JSON5BaseListener implements JSON5Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumber(JSON5Parser.NumberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSnstopicPair(JSON5Parser.SnstopicPairContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSnstopicPair(JSON5Parser.SnstopicPairContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

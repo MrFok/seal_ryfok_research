@@ -1,0 +1,43 @@
+{
+    "Id": "ResourceId_I1mCc",
+    "Name": "ReleaseLabelCluster",
+    "AllowedValues": [
+          "Property",
+          "io.file.table.size",
+          "io.file.buffer.size",
+          "io.input.buffer.size"
+        ]
+}
+
+
+// "AllowedValues": [
+//           "true",
+//           "false"
+//         ],
+
+// "Fields": [
+//             {
+//             "Key": "type",
+//             "StringValue": "Property"
+//             },
+//             {
+//             "Key" : "value",
+//             "StringValue": "4096"
+//             },
+//             {
+//             "Key" : "key",
+//             "StringValue": "io.file.buffer.size"
+//             }
+//         ]
+
+/*
+GOAL: Get key-value pairs only
+Expected Output:
+
+
+
+*/
+
+  
+  
+  

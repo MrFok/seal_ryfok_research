@@ -6,6 +6,7 @@ from JSON5Parser import JSON5Parser
 from JSON5Visitor import JSON5Visitor
 
 import subprocess
+import re
 
 CF_FILES = {"DataPipeline-multiple-StringValue.json", 
             "DirectoryServiceSimpleAD.json",
@@ -33,6 +34,8 @@ NON_CF_FILES = {"BackgroundMediaPlayback.json",
 
 INVALID_ROOTS = {}
 #":", "}", "{", ","
+
+REGEX_TEMPLATE_PATTERN = r'\.|[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)'
 
 CF_FILES_DIR = "cf_json\\"
 NON_CF_FILES_DIR = "non_cf_json\\"
@@ -208,6 +211,89 @@ class CFDataValid():
             self.get_leaf_nodes(currNode.getChild(i), leaves)
 
         return leaves
+    
+    def extract_templates(self, strings: list):
+        """
+        Extracts all possible templates from a set of strings.
+
+        This method & its dependencies are ported from Hong Jin's JS Code
+
+        Args:
+            strings (list): A list of strings to extract templates from.
+
+        Returns:
+            list: A list of a list of all possible templates
+        """
+        split_strings = [re.findall(REGEX_TEMPLATE_PATTERN, s) for s in strings]
+        all_templates = []
+
+        # clusters = self._cluster_strings(split_strings, 2)
+        # templates = [self._find_template(cluster) for cluster in clusters]
+        # print(templates)
+        for i in range(2, 6): # Adjusting the range to match JavaScript's loop
+            clusters = self._cluster_strings(split_strings, i)
+            templates = [self._find_template(cluster) for cluster in clusters]
+            all_templates.append(templates)
+
+        return all_templates
+
+    def _find_template(self, strings: list):
+        # Determine the shortest string in the strings to use as a base for comparison
+        min_length = min(len(s) for s in strings)
+        template = []
+        for i in range(min_length):
+            # If all strings in the strings have the same value at position i, use that value, otherwise use '\\w+'
+            if all(s[i] == strings[0][i] for s in strings):
+                template.append(strings[0][i])
+            else:
+                template.append('\\w+')
+        # For any position beyond the shortest string, add '\\w+' as these positions vary
+        template += ['\\w+'] * (max(len(s) for s in strings) - min_length)
+        return [' '.join(template)]
+
+    def _calculate_similarity(self, str1, str2):
+        words1 = set(str1)
+        words2 = set(str2)
+        common_words = words1.intersection(words2)
+        return len(common_words)
+    
+    def _cluster_strings(self, strings, threshold):
+        clusters = []
+        for string in strings:
+            added = False
+            for cluster in clusters:
+                similarity = self._calculate_similarity(string, cluster[0])
+                if similarity >= threshold:
+                    cluster.append(string)
+                    added = True
+                    break
+            if not added:
+                clusters.append([string])
+
+        return clusters
+    
+    def generate_wildcard_patterns(self, string):
+        """
+        Generates a list of unique wildcard patterns from the input string.
+        """
+        parts = string.split('.')
+        print(parts)
+        patterns = []
+        pattern = ''
+
+        for part in parts:
+            sub_parts = re.findall(REGEX_TEMPLATE_PATTERN, part)  # Split part at uppercase letters
+
+            for sub_part in sub_parts:
+                pattern += sub_part
+                patterns.append(pattern + '.*')
+
+            pattern += '.'
+
+        # Remove duplicates while preserving order and remove the last element
+        unique_patterns = list(dict.fromkeys(patterns))[:-1]
+
+        return unique_patterns
 
     def get_leaf_nodes_mock(self):
         return {"Description" : "Best Practice SNS Topic", "Type":"String",
