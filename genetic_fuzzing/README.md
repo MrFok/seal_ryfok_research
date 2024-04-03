@@ -34,10 +34,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
-<h3 align="center">Software Engineering Analytics Laboratory Research</h3>
+<h3 align="center">Grammar-Based Fuzzing Research</h3>
 
   <p align="center">
-    Ricky Fok's research material in the SEAL lab at UCLA, led by Dr. Miryung Kim. 
+    W.I.P 
     <br />
     <!-- <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
@@ -106,11 +106,11 @@
 
 
 <!-- GETTING STARTED -->
-<!-- ## Getting Started
+## Getting Started
 
-This setup is on a Windows 10 Pro machine with a conda environment. -->
-<!-- 
-### Prerequisites
+This setup is on a Windows 10 Pro machine with a conda environment.
+
+### Dependencies
 
 * Python 3.12.1
 * ANTLR4 & ANTLR4 Python target ()
@@ -120,8 +120,19 @@ This setup is on a Windows 10 Pro machine with a conda environment. -->
 * typing
 * cfn-lint
 * deap 1.4.1
-* pyyaml -->
+* pyyaml
 
+
+### How to Use
+
+#### refine_demo.py
+This script demonstrates how a single interation of the grammar refinement is planned to work. Change into the `genetic_fuzzing` directory and run the python script.
+
+#### specialize_demo.py
+This script demonstrates a simple refinement case for the grammar. Change into the `genetic_fuzzing` directory and run the python script.
+
+#### Driver.py
+This script is supposed to be the main driver, but this is just has commented code for now. Currently, there is code to test some parsing and regex.
 <!-- * npm
   ```sh
   npm install npm@latest -g
@@ -134,7 +145,7 @@ This setup is on a Windows 10 Pro machine with a conda environment. -->
    ```sh
    git clone https://github.com/github_username/repo_name.git
    ```
-3. Install NPM packages
+3. Install NPM packagesa
    ```sh
    npm install
    ```
