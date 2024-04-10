@@ -17,8 +17,8 @@ public class JSON5Parser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, SINGLE_LINE_COMMENT=7, 
-		MULTI_LINE_COMMENT=8, LITERAL=9, STRING=10, NUMBER=11, NUMERIC_LITERAL=12, 
-		SYMBOL=13, IDENTIFIER=14, WS=15;
+		MULTI_LINE_COMMENT=8, ALPHABETIC_STRING=9, LITERAL=10, STRING=11, NUMBER=12, 
+		NUMERIC_LITERAL=13, SYMBOL=14, IDENTIFIER=15, WS=16;
 	public static final int
 		RULE_json5 = 0, RULE_obj = 1, RULE_pair = 2, RULE_key = 3, RULE_value = 4, 
 		RULE_arr = 5, RULE_number = 6;
@@ -38,8 +38,8 @@ public class JSON5Parser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, "SINGLE_LINE_COMMENT", "MULTI_LINE_COMMENT", 
-			"LITERAL", "STRING", "NUMBER", "NUMERIC_LITERAL", "SYMBOL", "IDENTIFIER", 
-			"WS"
+			"ALPHABETIC_STRING", "LITERAL", "STRING", "NUMBER", "NUMERIC_LITERAL", 
+			"SYMBOL", "IDENTIFIER", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -115,7 +115,7 @@ public class JSON5Parser extends Parser {
 			setState(15);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 15906L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 31778L) != 0)) {
 				{
 				setState(14);
 				value();
@@ -281,7 +281,7 @@ public class JSON5Parser extends Parser {
 			{
 			setState(41);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 22016L) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 44032L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -516,7 +516,7 @@ public class JSON5Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u000fJ\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0010J\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0001\u0000\u0003\u0000\u0010"+
 		"\b\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
@@ -529,7 +529,7 @@ public class JSON5Parser extends Parser {
 		"\u0003\u0005=\b\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
 		"\u0003\u0005C\b\u0005\u0001\u0006\u0003\u0006F\b\u0006\u0001\u0006\u0001"+
 		"\u0006\u0001\u0006\u0000\u0000\u0007\u0000\u0002\u0004\u0006\b\n\f\u0000"+
-		"\u0002\u0003\u0000\t\n\f\f\u000e\u000e\u0001\u0000\u000b\fN\u0000\u000f"+
+		"\u0002\u0003\u0000\n\u000b\r\r\u000f\u000f\u0001\u0000\f\rN\u0000\u000f"+
 		"\u0001\u0000\u0000\u0000\u0002#\u0001\u0000\u0000\u0000\u0004%\u0001\u0000"+
 		"\u0000\u0000\u0006)\u0001\u0000\u0000\u0000\b0\u0001\u0000\u0000\u0000"+
 		"\nB\u0001\u0000\u0000\u0000\fE\u0001\u0000\u0000\u0000\u000e\u0010\u0003"+
@@ -547,21 +547,21 @@ public class JSON5Parser extends Parser {
 		"\u0000\u0000#\u0013\u0001\u0000\u0000\u0000#!\u0001\u0000\u0000\u0000"+
 		"$\u0003\u0001\u0000\u0000\u0000%&\u0003\u0006\u0003\u0000&\'\u0005\u0004"+
 		"\u0000\u0000\'(\u0003\b\u0004\u0000(\u0005\u0001\u0000\u0000\u0000)*\u0007"+
-		"\u0000\u0000\u0000*\u0007\u0001\u0000\u0000\u0000+1\u0005\n\u0000\u0000"+
-		",1\u0003\f\u0006\u0000-1\u0003\u0002\u0001\u0000.1\u0003\n\u0005\u0000"+
-		"/1\u0005\t\u0000\u00000+\u0001\u0000\u0000\u00000,\u0001\u0000\u0000\u0000"+
-		"0-\u0001\u0000\u0000\u00000.\u0001\u0000\u0000\u00000/\u0001\u0000\u0000"+
-		"\u00001\t\u0001\u0000\u0000\u000023\u0005\u0005\u0000\u000038\u0003\b"+
-		"\u0004\u000045\u0005\u0002\u0000\u000057\u0003\b\u0004\u000064\u0001\u0000"+
-		"\u0000\u00007:\u0001\u0000\u0000\u000086\u0001\u0000\u0000\u000089\u0001"+
-		"\u0000\u0000\u00009<\u0001\u0000\u0000\u0000:8\u0001\u0000\u0000\u0000"+
-		";=\u0005\u0002\u0000\u0000<;\u0001\u0000\u0000\u0000<=\u0001\u0000\u0000"+
-		"\u0000=>\u0001\u0000\u0000\u0000>?\u0005\u0006\u0000\u0000?C\u0001\u0000"+
-		"\u0000\u0000@A\u0005\u0005\u0000\u0000AC\u0005\u0006\u0000\u0000B2\u0001"+
-		"\u0000\u0000\u0000B@\u0001\u0000\u0000\u0000C\u000b\u0001\u0000\u0000"+
-		"\u0000DF\u0005\r\u0000\u0000ED\u0001\u0000\u0000\u0000EF\u0001\u0000\u0000"+
-		"\u0000FG\u0001\u0000\u0000\u0000GH\u0007\u0001\u0000\u0000H\r\u0001\u0000"+
-		"\u0000\u0000\t\u000f\u0019\u001d#08<BE";
+		"\u0000\u0000\u0000*\u0007\u0001\u0000\u0000\u0000+1\u0005\u000b\u0000"+
+		"\u0000,1\u0003\f\u0006\u0000-1\u0003\u0002\u0001\u0000.1\u0003\n\u0005"+
+		"\u0000/1\u0005\n\u0000\u00000+\u0001\u0000\u0000\u00000,\u0001\u0000\u0000"+
+		"\u00000-\u0001\u0000\u0000\u00000.\u0001\u0000\u0000\u00000/\u0001\u0000"+
+		"\u0000\u00001\t\u0001\u0000\u0000\u000023\u0005\u0005\u0000\u000038\u0003"+
+		"\b\u0004\u000045\u0005\u0002\u0000\u000057\u0003\b\u0004\u000064\u0001"+
+		"\u0000\u0000\u00007:\u0001\u0000\u0000\u000086\u0001\u0000\u0000\u0000"+
+		"89\u0001\u0000\u0000\u00009<\u0001\u0000\u0000\u0000:8\u0001\u0000\u0000"+
+		"\u0000;=\u0005\u0002\u0000\u0000<;\u0001\u0000\u0000\u0000<=\u0001\u0000"+
+		"\u0000\u0000=>\u0001\u0000\u0000\u0000>?\u0005\u0006\u0000\u0000?C\u0001"+
+		"\u0000\u0000\u0000@A\u0005\u0005\u0000\u0000AC\u0005\u0006\u0000\u0000"+
+		"B2\u0001\u0000\u0000\u0000B@\u0001\u0000\u0000\u0000C\u000b\u0001\u0000"+
+		"\u0000\u0000DF\u0005\u000e\u0000\u0000ED\u0001\u0000\u0000\u0000EF\u0001"+
+		"\u0000\u0000\u0000FG\u0001\u0000\u0000\u0000GH\u0007\u0001\u0000\u0000"+
+		"H\r\u0001\u0000\u0000\u0000\t\u000f\u0019\u001d#08<BE";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
