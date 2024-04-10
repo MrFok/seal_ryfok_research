@@ -58,6 +58,8 @@ MULTI_LINE_COMMENT
     : '/*' .*? '*/' -> skip
     ;
 
+ALPHABETIC_STRING : [a-zA-Z_]+ ;
+
 LITERAL
     : 'true'
     | 'false'

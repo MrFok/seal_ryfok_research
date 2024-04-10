@@ -22,8 +22,11 @@ INITIAL_PAIR_DEF = """pair
 UPDATE_PAIR_STR = """pair
     :"""
 
+LEXER_STR = """// Lexer"""
+
 from CFDataValid import CFDataValid
-import subprocess
+import pickle
+import json
 import os
 import random
 from CFDataValid import CFDataValid
@@ -42,6 +45,7 @@ class g4Refine():
         self.curr_g4 = content
         self.prev_pair = INITIAL_PAIR_DEF
 
+        # TODO: Mark change
         self.change_list = {}
 
         # TODO: Add system check. Validate cf files, non-cf files, compile grammar, etc.
@@ -191,32 +195,57 @@ class g4Refine():
 
         validator = CFDataValid()
         validator.validate_file(sampleFile, verbose=verbose)
-        leafs = validator.get_leaf_nodes_mock()
+
+        # Create a new directory called parse_tree
+        if not os.path.exists("parse_tree"):
+            os.makedirs("parse_tree")
+
+        # Run the command to generate the parse tree
+        os.system(f"grammarinator-parse {EDIT_PATH} -r json5 -i {sampleFile} -o parse_tree")
+
+        # Obtain the single .grt file in the parse_tree folder
+        grt_files = [file for file in os.listdir("parse_tree") if file.endswith(".grt")]
+        if len(grt_files) != 1:
+            raise Exception ("Error: Expected a single .grt file in the parse_tree folder.")
+        grt_file = grt_files[0]
+        grt_file_path = os.path.join("parse_tree", grt_file)
+        # Open the .grt file
+        with open(grt_file_path, 'rb') as file:
+            content = open(grt_file_path, 'rb')
+        pickle_file = pickle.load(content)
+        content_dict = json.loads(pickle_file.__str__())
+        tree = validator.traverse_antlr_pre_order(content_dict, verbose=verbose)
+        
+        #TODO: Cannot delete because resource is being used. FIX ASAP
         prev_pair = self.prev_pair
     
         if sampleFile not in self.change_list:
             self.change_list[sampleFile] = list()
+        else:
+            raise ValueError("Sample file already in change list. Specialization can only be performed once per file.")
 
         change_list = self.change_list[sampleFile]
         
         # Choose a random item from leafs that is not in the change_list
-        # TODO: This is a temporary fix. We need to consider object key/values
-        random_leaf_change = random.choice([key for key in leafs.keys() if key not in change_list])
+        # TODO: Increase coverage for nested lists
+        random_leaf_change = random.choice([key for key in tree.keys() if key not in change_list])
         change_list.append(random_leaf_change)
-        if verbose: print(f"Selected Leaf: \'{random_leaf_change}\' : \'{leafs[random_leaf_change]}\'\n")      
-        new_pair, new_rule = self.add_to_pair(random_leaf_change, leafs[random_leaf_change])
+        if verbose: print(f"Selected Leaf: \'{random_leaf_change}\' : \'{tree[random_leaf_change]}\'\n")      
+        new_pair, key_parser_rule, value_parser_rule, new_lexer_key, new_lexer_value = self.submit_change(random_leaf_change, tree[random_leaf_change])
 
-        if verbose:
-            print(f"New Rule\n--------\n {new_rule}\n")
-            print(f"New Pair\n--------\n {new_pair}\n")
+        if verbose:           
+            full_pair = new_pair + "\n\n" + key_parser_rule + "\n\n" + value_parser_rule
+            full_new_lexer = LEXER_STR +"\n\n" + new_lexer_key + "\n\n" + new_lexer_value
+            print(f"Full Pair + Rules\n{full_pair}")
+            print("------------------")
+            print(f"New Lexer Rules\n{full_new_lexer}")
 
         # Apply the change to the grammar
-        new_g4 = self.curr_g4.replace(prev_pair, new_pair)
-        new_g4 += "\n" + new_rule
+        new_g4 = self.curr_g4.replace(INITIAL_PAIR_DEF, full_pair)
+        new_g4 = new_g4.replace(LEXER_STR, full_new_lexer)
+
         return new_g4, new_pair
             
-        
-
         # # Update the current grammar and pair
         # self.curr_g4 = g_prime
         # self.prev_pair = random_leaf
@@ -226,9 +255,126 @@ class g4Refine():
 
         # # Return the updated grammar and change_list
         # return g_prime, change_list
-    
+
     # NOTE: This function only takes in string key and values, 
     #       but we still need to consider object key/values
+    def submit_change(self, key: str, value):
+        """
+        Obtains new rules based off key-value pair to add to the grammar
+
+        Args:
+            key (str): The key to add to the pair definition
+            value (str): The value to add to the pair definition
+        Return:
+            new_pair (str): The updated pair definition
+            key_parser_rule (str): key parser rule
+            value_parser_rule (str): value parser rule
+            new_lexer_key (str): lexer rule for the key
+            new_lexer_value (str): lexer rule for the value
+        """
+
+        new_rule = INITIAL_PAIR_DEF
+        rule_key_name = key.replace(" ", "").lower() + "Keys"
+        rule_value_name = key.replace(" ", "").lower() + "Values"
+        lexer_key_name = key.replace(" ", "").upper() + "_KEY"
+        lexer_value_name = key.replace(" ", "").upper() + "_VALUE"
+
+        ### Generate new rule
+
+        # new pair set
+        new_rule_value = f"""{rule_key_name} ':' {rule_value_name}"""
+
+        # new lexer rules
+        new_lexer_key = new_rule.replace("""pair""", lexer_key_name)
+        new_lexer_key = new_lexer_key.replace(""": key ':' value""", f""": \'\"{key}\"\'""")
+
+        new_lexer_value = new_rule.replace("""pair""", lexer_value_name)
+        new_lexer_value_syntax = ""
+        if type(value) == str:
+            new_lexer_value_syntax = f""": \'\"\' \'{value}\' \'\"\'"""
+        elif type(value) == list:
+            for i, val in enumerate(value):
+                if i == 0:
+                    new_lexer_value_syntax += f""": \'\"\' {val[0]} \'\"\'"""
+                else:
+                    new_lexer_value_syntax += f"""
+    | \'\"\' {val[0]} \'\"\'"""
+        else:
+            # TODO: Need to expand coverage
+            raise ValueError("Value must be a string or list of strings. Different types are WIP")
+        new_lexer_value = new_lexer_value.replace(""": key ':' value""", new_lexer_value_syntax)
+
+        # new parser rules
+        key_parser_rule = new_rule.replace("""pair""", rule_key_name)
+        key_parser_rule = key_parser_rule.replace(""": key ':' value""", f""": {lexer_key_name}""")
+        value_parser_rule = new_rule.replace("""pair""", rule_value_name)
+        value_parser_rule = value_parser_rule.replace(""": key ':' value""", f""": {lexer_value_name}""")   
+
+        # TODO: Need to expand coverage
+        replace_pair_str = f"""pair
+    : {new_rule_value}
+    |"""
+
+        # Add rule subset into pair definition
+        new_pair = self.prev_pair
+        new_pair = new_pair.replace(UPDATE_PAIR_STR, replace_pair_str)
+        # print(new_pair)
+        return new_pair, key_parser_rule, value_parser_rule, new_lexer_key, new_lexer_value
+    
+    def refine_demo_2(self):
+        import tkinter as tk
+        from tkinter import messagebox
+
+        print("RYFOK GRAMMAR REFINEMENT DEMO V1.0\n")
+        print("-----------------------------------")
+        input("Refining Grammar: Press ENTER to continue...")
+        print(f"Refining...")
+        g_prime, new_pair = self.specialize("testJSON.json5", verbose=True)
+        print(f"---------------DONE----------------")
+
+        input("Write new grammar to file: Press ENTER to continue...")
+        print(f"Writing...")
+        # Write the new grammar to the file
+        if not os.path.exists(EDIT_PATH):
+            open(EDIT_PATH, 'a').close()
+        with open(EDIT_PATH, 'w') as output_file:
+            output_file.write(g_prime)
+        print(f"---------------DONE----------------")
+        # Read the file content
+        with open(EDIT_PATH, 'r') as file:
+            content = file.read()
+
+        input("Update ANTLR4 Generated Files: Press ENTER to continue...")
+        # Compile grammar's lexer and parser
+        currValidator = CFDataValid()
+        print(f"Compiling...")
+        currValidator.recompile_grammar()
+        print(f"---------------DONE----------------")
+        
+        input("Evaluate New Grammar Performance: Press ENTER to continue...")
+        print(f"Evaluating...")
+        # Validate parser with our dataset
+        cf_states, non_cf_states, cf_pass, non_cf_pass = currValidator.validate_parser(verbose=True)
+        print(f"---------------DONE----------------")
+
+        reset = input("Demo is finished. Reset to original grammar? (y/n): ")
+        if reset.lower() == "y":
+            print(f"Resetting...")
+            with open(ORG_PATH, 'r') as original_file:
+                content = original_file.read()
+            with open(EDIT_PATH, 'w') as target_file:
+                target_file.write(content)
+            print(f"Original Grammar Restored. Recompiling...")
+            currValidator.recompile_grammar()
+            print(f"---------------DONE----------------")
+            print(f"Original Grammar Restored")
+        # Delete all files in parse_tree folder
+        file_list = os.listdir("parse_tree")
+        for file_name in file_list:
+            file_path = os.path.join("parse_tree", file_name)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+
     def add_to_pair(self, key: str, value: str):
         """
         Adds a pair to the current pair definition

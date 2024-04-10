@@ -212,11 +212,39 @@ class CFDataValid():
 
         return leaves
     
+    def traverse_antlr_pre_order(self, dictionary, prefix = "", verbose=False, item_dict = {}):
+        """
+        Traverses tree JSON in pre-order fashion and returns all key-value pairs
+
+        Args:
+            dictionary (dict): The dictionary to traverse.
+            prefix (str, optional): The prefix to add to the keys. Defaults to "" for recursion.
+            verbose (bool, optional): If True, prints the key-value pairs. Defaults to False.
+        Returns:
+            dict: A dictionary with the key-value pairs.
+        """
+
+        for key, value in dictionary.items():
+            if prefix != "":
+                key = prefix + "." + key 
+            if not isinstance(value, (dict, list)):
+                if verbose: print(f"Key: {key} | Value: {value}")  # Or perform any other operation on the key-value pair
+                item_dict[key] = value
+            elif isinstance(value, dict):
+                self.traverse_antlr_pre_order(value, key, item_dict)
+            elif isinstance(value, list):
+                validator = CFDataValid()
+                templates = validator.extract_templates(value)
+                item_dict[key] = templates[0]
+                if verbose: print(f"List Add: {key} | {item_dict[key]}")
+
+        return item_dict
+
     def extract_templates(self, strings: list):
         """
         Extracts all possible templates from a set of strings.
 
-        This method & its dependencies are ported from Hong Jin's JS Code
+        This method & its dependencies are ported from Hong Jin Kang's JS Code
 
         Args:
             strings (list): A list of strings to extract templates from.
@@ -238,19 +266,33 @@ class CFDataValid():
         return all_templates
 
     def _find_template(self, strings: list):
-        # Determine the shortest string in the strings to use as a base for comparison
+        """
+        Determines the shortest shortest lexer syntax in the strings to use as a base for comparison
+        
+        This method & its dependencies are modified from Hong Jin Kang's JS Code
+
+        Args:
+            strings (list): A list of strings to extract templates from.
+        Returns:
+            list: A list of strings representing the template
+        """
+
         min_length = min(len(s) for s in strings)
         template = []
         for i in range(min_length):
+            word = ''
             # If all strings in the strings have the same value at position i, use that value, otherwise use '\\w+'
             if all(s[i] == strings[0][i] for s in strings):
-                template.append(strings[0][i])
+                template.append(f'\'{strings[0][i]}\'')
             else:
-                template.append('\\w+')
+                template.append('\'ALPHABETIC_STRING\'')
+            # print(template)
         # For any position beyond the shortest string, add '\\w+' as these positions vary
-        template += ['\\w+'] * (max(len(s) for s in strings) - min_length)
+        template += ['\'ALPHABETIC_STRING\''] * (max(len(s) for s in strings) - min_length)
+        # print("\n Final template\n")
+        # print(template)
         return [' '.join(template)]
-
+    
     def _calculate_similarity(self, str1, str2):
         words1 = set(str1)
         words2 = set(str2)

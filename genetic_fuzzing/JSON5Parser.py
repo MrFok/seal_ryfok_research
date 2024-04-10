@@ -10,13 +10,13 @@ else:
 
 def serializedATN():
     return [
-        4,1,15,74,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,16,74,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,1,0,3,0,16,8,0,1,0,1,0,1,1,1,1,1,1,1,1,5,1,24,8,1,10,1,12,1,27,
         9,1,1,1,3,1,30,8,1,1,1,1,1,1,1,1,1,3,1,36,8,1,1,2,1,2,1,2,1,2,1,
         3,1,3,1,4,1,4,1,4,1,4,1,4,3,4,49,8,4,1,5,1,5,1,5,1,5,5,5,55,8,5,
         10,5,12,5,58,9,5,1,5,3,5,61,8,5,1,5,1,5,1,5,1,5,3,5,67,8,5,1,6,3,
-        6,70,8,6,1,6,1,6,1,6,0,0,7,0,2,4,6,8,10,12,0,2,3,0,9,10,12,12,14,
-        14,1,0,11,12,78,0,15,1,0,0,0,2,35,1,0,0,0,4,37,1,0,0,0,6,41,1,0,
+        6,70,8,6,1,6,1,6,1,6,0,0,7,0,2,4,6,8,10,12,0,2,3,0,10,11,13,13,15,
+        15,1,0,12,13,78,0,15,1,0,0,0,2,35,1,0,0,0,4,37,1,0,0,0,6,41,1,0,
         0,0,8,48,1,0,0,0,10,66,1,0,0,0,12,69,1,0,0,0,14,16,3,8,4,0,15,14,
         1,0,0,0,15,16,1,0,0,0,16,17,1,0,0,0,17,18,5,0,0,1,18,1,1,0,0,0,19,
         20,5,1,0,0,20,25,3,4,2,0,21,22,5,2,0,0,22,24,3,4,2,0,23,21,1,0,0,
@@ -24,16 +24,16 @@ def serializedATN():
         1,0,0,0,28,30,5,2,0,0,29,28,1,0,0,0,29,30,1,0,0,0,30,31,1,0,0,0,
         31,32,5,3,0,0,32,36,1,0,0,0,33,34,5,1,0,0,34,36,5,3,0,0,35,19,1,
         0,0,0,35,33,1,0,0,0,36,3,1,0,0,0,37,38,3,6,3,0,38,39,5,4,0,0,39,
-        40,3,8,4,0,40,5,1,0,0,0,41,42,7,0,0,0,42,7,1,0,0,0,43,49,5,10,0,
-        0,44,49,3,12,6,0,45,49,3,2,1,0,46,49,3,10,5,0,47,49,5,9,0,0,48,43,
-        1,0,0,0,48,44,1,0,0,0,48,45,1,0,0,0,48,46,1,0,0,0,48,47,1,0,0,0,
-        49,9,1,0,0,0,50,51,5,5,0,0,51,56,3,8,4,0,52,53,5,2,0,0,53,55,3,8,
-        4,0,54,52,1,0,0,0,55,58,1,0,0,0,56,54,1,0,0,0,56,57,1,0,0,0,57,60,
-        1,0,0,0,58,56,1,0,0,0,59,61,5,2,0,0,60,59,1,0,0,0,60,61,1,0,0,0,
-        61,62,1,0,0,0,62,63,5,6,0,0,63,67,1,0,0,0,64,65,5,5,0,0,65,67,5,
-        6,0,0,66,50,1,0,0,0,66,64,1,0,0,0,67,11,1,0,0,0,68,70,5,13,0,0,69,
-        68,1,0,0,0,69,70,1,0,0,0,70,71,1,0,0,0,71,72,7,1,0,0,72,13,1,0,0,
-        0,9,15,25,29,35,48,56,60,66,69
+        40,3,8,4,0,40,5,1,0,0,0,41,42,7,0,0,0,42,7,1,0,0,0,43,49,5,11,0,
+        0,44,49,3,12,6,0,45,49,3,2,1,0,46,49,3,10,5,0,47,49,5,10,0,0,48,
+        43,1,0,0,0,48,44,1,0,0,0,48,45,1,0,0,0,48,46,1,0,0,0,48,47,1,0,0,
+        0,49,9,1,0,0,0,50,51,5,5,0,0,51,56,3,8,4,0,52,53,5,2,0,0,53,55,3,
+        8,4,0,54,52,1,0,0,0,55,58,1,0,0,0,56,54,1,0,0,0,56,57,1,0,0,0,57,
+        60,1,0,0,0,58,56,1,0,0,0,59,61,5,2,0,0,60,59,1,0,0,0,60,61,1,0,0,
+        0,61,62,1,0,0,0,62,63,5,6,0,0,63,67,1,0,0,0,64,65,5,5,0,0,65,67,
+        5,6,0,0,66,50,1,0,0,0,66,64,1,0,0,0,67,11,1,0,0,0,68,70,5,14,0,0,
+        69,68,1,0,0,0,69,70,1,0,0,0,70,71,1,0,0,0,71,72,7,1,0,0,72,13,1,
+        0,0,0,9,15,25,29,35,48,56,60,66,69
     ]
 
 class JSON5Parser ( Parser ):
@@ -50,8 +50,9 @@ class JSON5Parser ( Parser ):
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "SINGLE_LINE_COMMENT", 
-                      "MULTI_LINE_COMMENT", "LITERAL", "STRING", "NUMBER", 
-                      "NUMERIC_LITERAL", "SYMBOL", "IDENTIFIER", "WS" ]
+                      "MULTI_LINE_COMMENT", "ALPHABETIC_STRING", "LITERAL", 
+                      "STRING", "NUMBER", "NUMERIC_LITERAL", "SYMBOL", "IDENTIFIER", 
+                      "WS" ]
 
     RULE_json5 = 0
     RULE_obj = 1
@@ -72,13 +73,14 @@ class JSON5Parser ( Parser ):
     T__5=6
     SINGLE_LINE_COMMENT=7
     MULTI_LINE_COMMENT=8
-    LITERAL=9
-    STRING=10
-    NUMBER=11
-    NUMERIC_LITERAL=12
-    SYMBOL=13
-    IDENTIFIER=14
-    WS=15
+    ALPHABETIC_STRING=9
+    LITERAL=10
+    STRING=11
+    NUMBER=12
+    NUMERIC_LITERAL=13
+    SYMBOL=14
+    IDENTIFIER=15
+    WS=16
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -133,7 +135,7 @@ class JSON5Parser ( Parser ):
             self.state = 15
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 15906) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 31778) != 0):
                 self.state = 14
                 self.value()
 
@@ -345,7 +347,7 @@ class JSON5Parser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 41
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 22016) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 44032) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -412,12 +414,12 @@ class JSON5Parser ( Parser ):
             self.state = 48
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [10]:
+            if token in [11]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 43
                 self.match(JSON5Parser.STRING)
                 pass
-            elif token in [11, 12, 13]:
+            elif token in [12, 13, 14]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 44
                 self.number()
@@ -432,7 +434,7 @@ class JSON5Parser ( Parser ):
                 self.state = 46
                 self.arr()
                 pass
-            elif token in [9]:
+            elif token in [10]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 47
                 self.match(JSON5Parser.LITERAL)
@@ -587,14 +589,14 @@ class JSON5Parser ( Parser ):
             self.state = 69
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==13:
+            if _la==14:
                 self.state = 68
                 self.match(JSON5Parser.SYMBOL)
 
 
             self.state = 71
             _la = self._input.LA(1)
-            if not(_la==11 or _la==12):
+            if not(_la==12 or _la==13):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
