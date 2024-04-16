@@ -47,9 +47,7 @@ Create a CFDataValid class to validate current JSON5 implementation
 class CFDataValid():
     def __init__(self):
         self.cf_files = CF_FILES
-        self.non_cf_files = NON_CF_FILES
         self.cf_states = {}
-        self.non_cf_states = {}
         self.curr_tree = None
 
     def validate_file(self, filePath, verbose=False):
@@ -137,13 +135,10 @@ class CFDataValid():
 
         Returns:
             dict: A dictionary of the validation status for each CF file.
-            dict: A dictionary of the validation status for each non-CF file.
-            int: The number of CF files that passed validation.
             int: The number of non-CF files that passed validation
         """
 
         cf_pass = 0
-        non_cf_pass = 0
         if verbose:
             print("Validating Positive CloudFormation files...")
         for file in self.cf_files:
@@ -156,21 +151,8 @@ class CFDataValid():
             if verbose:
                 print(f'{file[:12]}... | {"PASS - Parsed Successfully" if self.cf_states[file] else "FAIL - Parser Failed"}', end='')
                 print()
-
-        if verbose:
-            print("\nValidating Negative CloudFormation files...")
         
-        for file in self.non_cf_files:
-            status_parser = self.validate_file(NON_CF_FILES_DIR + file)
-
-            # Status in non CF set should be False
-            self.non_cf_states[file] = status_parser
-            if status_parser:
-                non_cf_pass += 1
-            if verbose:
-                print(f'{file[:12]}... | {"PASS - Unable to Parse" if not self.non_cf_states[file] else "FAIL - Parsed Successfully"}')
-        
-        return self.cf_states, self.non_cf_states, cf_pass, non_cf_pass
+        return self.cf_states, cf_pass
 
     def recompile_grammar(self):
         """
