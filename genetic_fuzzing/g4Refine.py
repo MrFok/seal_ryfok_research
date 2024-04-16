@@ -75,7 +75,7 @@ class g4Refine():
         if verbose: print(f"DONE!\n")
 
         # Validate parser with our dataset
-        cf_states, non_cf_states, cf_pass, non_cf_pass = currValidator.validate_parser(verbose=verbose)
+        cf_states, cf_pass = currValidator.validate_parser(verbose=verbose)
 
         # TODO: Set condition for accepting grammar change. For now, we will just make a change regardless of status
         # If fewer non-cf files are passing and all cf files are still passing, then we have a better grammar
@@ -133,7 +133,7 @@ class g4Refine():
         input("Evaluate New Grammar Performance: Press any key to continue...")
         print(f"Evaluating...")
         # Validate parser with our dataset
-        cf_states, non_cf_states = currValidator.validate_parser(verbose=True)
+        cf_states, cf_pass = currValidator.validate_parser(verbose=True)
         print(f"---------------DONE----------------")
 
         reset = input("Demo is finished. Reset to original grammar? (y/n): ")
@@ -354,7 +354,7 @@ class g4Refine():
         input("Evaluate New Grammar Performance: Press ENTER to continue...")
         print(f"Evaluating...")
         # Validate parser with our dataset
-        cf_states, non_cf_states = currValidator.validate_parser(verbose=True)
+        cf_states, cf_pass = currValidator.validate_parser(verbose=True)
         print(f"---------------DONE----------------")
 
         reset = input("Demo is finished. Reset to original grammar? (y/n): ")
